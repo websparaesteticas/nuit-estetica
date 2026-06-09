@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NUIT — Estética Integral | Nueva Córdoba</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --night:    #0B0B14;
+      --deep:     #13131F;
+      --navy:     #1E1E30;
+      --gold:     #C9A84C;
+      --champagne:#F5E6C8;
+      --silver:   #A0A0B8;
+      --white:    #FFFFFF;
+      --radius:   12px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Georgia', serif;
+      background: var(--night);
+      color: var(--champagne);
+      line-height: 1.7;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%;
+      background: rgba(11, 11, 20, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .nav-logo {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--silver);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold) !important;
+      color: var(--night) !important;
+      padding: 0.5rem 1.3rem;
+      border-radius: 40px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { opacity: 0.85 !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--gold); border-radius: 2px; }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      background:
+        linear-gradient(180deg, rgba(11,11,20,0.75) 0%, rgba(11,11,20,0.88) 100%),
+        url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1600&q=80') center/cover no-repeat;
+    }
+    .hero-tag {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+    }
+    .hero h1 {
+      font-size: clamp(5rem, 18vw, 12rem);
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--silver);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      border-radius: 40px;
+      font-family: 'Arial', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--gold); color: var(--night); font-weight: 600; }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+    .btn-outline { border: 1.5px solid rgba(201,168,76,0.5); color: var(--champagne); margin-left: 1rem; }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .hero-badge {
+      margin-top: 3rem;
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      padding: 0.65rem 1.4rem;
+      border-radius: 40px;
+      font-family: 'Arial', sans-serif;
+      font-size: 0.82rem;
+      color: var(--champagne);
+    }
+    .stars { color: var(--gold); letter-spacing: 2px; }
+
+    /* ── Section base ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1.2rem; line-height: 1.2; }
+    .section-intro { font-size: 1rem; color: var(--silver); max-width: 540px; margin-bottom: 3.5rem; }
+
+    /* ── Servicios ── */
+    #servicios { background: var(--deep); }
+    #servicios .section-title { color: var(--champagne); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 2rem 1.8rem;
+      border: 1px solid rgba(201,168,76,0.15);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .service-card:hover { transform: translateY(-4px); border-color: rgba(201,168,76,0.4); }
+    .service-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .service-card h3 { font-size: 1.1rem; color: var(--gold); margin-bottom: 0.5rem; }
+    .service-card p { font-size: 0.9rem; color: var(--silver); }
+
+    /* ── Nosotros ── */
+    #nosotros { background: var(--night); }
+    #nosotros .section-title { color: var(--champagne); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-img { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/5; }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; }
+    .about-text p { margin-bottom: 1rem; color: var(--silver); }
+    .about-stat { display: flex; gap: 2.5rem; margin-top: 2.5rem; }
+    .stat-box { text-align: left; }
+    .stat-num { font-size: 2.4rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .stat-label { font-family: 'Arial', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--silver); }
+
+    /* ── Reseñas ── */
+    #reseñas { background: var(--deep); }
+    #reseñas .section-title { color: var(--champagne); }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .review-card {
+      background: var(--navy);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      transition: border-color 0.2s;
+    }
+    .review-card:hover { border-color: rgba(201,168,76,0.3); }
+    .review-stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; margin-bottom: 1rem; }
+    .review-text { font-size: 0.92rem; color: var(--silver); margin-bottom: 1.2rem; font-style: italic; }
+    .review-author { font-family: 'Arial', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(160,160,184,0.55); }
+    .reviews-cta { text-align: center; margin-top: 3rem; }
+    .reviews-cta p { color: var(--silver); margin-bottom: 1rem; font-family: 'Arial', sans-serif; font-size: 0.85rem; }
+
+    /* ── Contacto ── */
+    #contacto { background: var(--navy); }
+    #contacto .section-title { color: var(--champagne); }
+    .contact-grid { max-width: 560px; }
+    .contact-info p { color: var(--silver); margin-bottom: 2rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.4rem; }
+    .contact-icon { font-size: 1.3rem; margin-top: 2px; }
+    .contact-item strong { display: block; font-size: 0.75rem; font-family: 'Arial', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+    .contact-item span { font-size: 0.95rem; color: var(--champagne); }
+
+    /* ── WhatsApp float ── */
+    .wa-float {
+      position: fixed; bottom: 1.8rem; right: 1.8rem;
+      background: #25D366; color: white;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      z-index: 200;
+      transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--night);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      color: var(--silver);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .footer-logo { font-size: 2.2rem; letter-spacing: 0.35em; color: var(--gold); margin-bottom: 0.5rem; }
+    footer p { font-family: 'Arial', sans-serif; font-size: 0.78rem; opacity: 0.45; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 64px; left: 0; width: 100%;
+        background: var(--deep);
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid rgba(201,168,76,0.15);
+        gap: 1.2rem;
+      }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-img { aspect-ratio: 16/9; }
+      .hero h1 { letter-spacing: 0.18em; }
+      .btn-outline { margin-left: 0; margin-top: 0.8rem; }
+    }
+
+    /* ── Scroll Reveal ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Nav scrolled ── */
+    nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.12); }
+
+    /* ── WhatsApp pulse ── */
+    @keyframes wa-pulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.45), 0 0 0 0 rgba(37,211,102,0.4); }
+      60%       { box-shadow: 0 4px 20px rgba(37,211,102,0.45), 0 0 0 13px rgba(37,211,102,0); }
+    }
+    .wa-float { animation: wa-pulse 2.8s ease infinite; }
+    .wa-float:hover { animation: none; transform: scale(1.1); }
+
+    /* ── Mapa ── */
+    .map-section { padding: 0; }
+    .map-section iframe { width: 100%; height: 380px; border: 0; display: block; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">NUIT</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#reseñas">Reseñas</a></li>
+    <li><a href="#contacto" class="nav-cta">Reservar turno</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="hero" id="inicio">
+  <div>
+    <p class="hero-tag">Estética Integral · Nueva Córdoba</p>
+    <h1>NUIT</h1>
+    <p class="hero-sub">Un espacio de cuidado exclusivo donde cada tratamiento es una experiencia. Tu bienestar merece lo mejor.</p>
+    <div>
+      <a href="#contacto" class="btn btn-primary">Reservar turno</a>
+      <a href="#servicios" class="btn btn-outline">Ver servicios</a>
+    </div>
+    <div class="hero-badge">
+      <span class="stars">★★★★½</span>
+      <strong>4.6 estrellas · 257 reseñas en Google</strong>
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="container">
+    <p class="section-label">Lo que hacemos</p>
+    <h2 class="section-title">Nuestros servicios</h2>
+    <p class="section-intro">Tratamientos estéticos integrales con técnica y dedicación para que llegues y te vayas sintiéndote renovada.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">✨</div>
+        <h3>Limpieza Facial Profunda</h3>
+        <p>Higiene cutánea completa con extracción, mascarilla y masaje. Para todo tipo de piel.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💆</div>
+        <h3>Tratamientos Faciales</h3>
+        <p>Hidratación, anti-edad y luminosidad. Protocolos personalizados para cada objetivo de piel.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌙</div>
+        <h3>Tratamientos Corporales</h3>
+        <p>Modelado, tonificación y recuperación. Tecnología y manos expertas al servicio de tu cuerpo.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌸</div>
+        <h3>Depilación</h3>
+        <p>Servicio cuidadoso y prolijo para toda zona. Piel suave y sin irritaciones.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💅</div>
+        <h3>Manicuría & Pedicuría</h3>
+        <p>Esmaltado semipermanente, tratamientos nutritivos y cuidado profesional de manos y pies.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🫧</div>
+        <h3>Estética Integral</h3>
+        <p>Servicio completo y personalizado. Un solo lugar para todos tus tratamientos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img">
+        <img
+          src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&q=80"
+          alt="Interior NUIT Estética"
+          loading="lazy"
+        />
+      </div>
+      <div class="about-text">
+        <p class="section-label">Quiénes somos</p>
+        <h2 class="section-title">Donde el cuidado se convierte en ritual</h2>
+        <p>En NUIT sabemos que el tiempo que te dedicás a vos misma es sagrado. Por eso creamos un espacio donde cada visita es una experiencia completa: desde que entrás hasta que salís.</p>
+        <p>Nuestro equipo trabaja con dedicación, técnica actualizada y los mejores productos, en un ambiente moderno y cálido en Nueva Córdoba.</p>
+        <div class="about-stat">
+          <div class="stat-box">
+            <div class="stat-num">257</div>
+            <div class="stat-label">Reseñas en Google</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">4.6</div>
+            <div class="stat-label">Estrellas promedio</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Dedicación</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reseñas">
+  <div class="container">
+    <p class="section-label">Lo que dicen nuestras clientas</p>
+    <h2 class="section-title">257 reseñas hablan por nosotras</h2>
+    <p class="section-intro">La confianza de quienes nos eligen es el reflejo más honesto de nuestro trabajo.</p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Increíble el resultado de la limpieza facial. Salí con la piel brillante y fresca. El ambiente es super lindo y moderno, definitivamente vuelvo."</p>
+        <div class="review-author">— Agustina P.</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Excelente atención, muy profesionales y cálidas. Se nota que le ponen mucho amor a lo que hacen. 100% recomendado."</p>
+        <div class="review-author">— Romina C.</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★½</div>
+        <p class="review-text">"El lugar es hermoso, con una iluminación muy acogedora. Los tratamientos son de primera calidad. Ya soy clienta fija."</p>
+        <div class="review-author">— Florencia M.</div>
+      </div>
+    </div>
+    <div class="reviews-cta">
+      <p>¿Ya fuiste? Contanos tu experiencia.</p>
+      <a
+        href="https://www.google.com/maps/place/Nuit+Est%C3%A9tica+Integral/@-31.4260939,-64.1865085,17z"
+        target="_blank"
+        class="btn btn-primary"
+      >Ver todas las reseñas en Google</a>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p class="section-label">Contacto</p>
+        <h2 class="section-title">Reservá tu turno</h2>
+        <p>Escribinos por WhatsApp o llamanos y te confirmamos disponibilidad al instante.</p>
+        <div class="contact-item">
+          <span class="contact-icon">📍</span>
+          <div>
+            <strong>Dirección</strong>
+            <span>Santiago Derqui 136, Córdoba Capital</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📞</span>
+          <div>
+            <strong>Teléfono</strong>
+            <span><a href="tel:+5403512494043" style="color: var(--champagne);">0351 249-4043</a></span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">🕐</span>
+          <div>
+            <strong>Horarios</strong>
+            <span>Lunes a viernes: 9:00 – 20:00<br>Sábados: 9:00 – 14:00</span>
+          </div>
+        </div>
+        <div style="margin-top: 2rem;">
+          <a
+            href="https://wa.me/5493512494043?text=Hola!%20Quisiera%20consultar%20por%20un%20turno%20en%20NUIT"
+            target="_blank"
+            class="btn btn-primary"
+          >💬 Escribir por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MAPA -->
+<section class="map-section">
+  <iframe
+    src="https://maps.google.com/maps?q=Santiago+Derqui+136+C%C3%B3rdoba+Argentina&output=embed&z=16"
+    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+    title="Ubicacion NUIT Estetica Integral"></iframe>
+</section>
+
+<footer>
+  <div class="footer-logo">NUIT</div>
+  <p>Santiago Derqui 136 · Nueva Córdoba · Córdoba Capital</p>
+  <p style="margin-top: 0.5rem;">© 2024 NUIT Estética Integral · Todos los derechos reservados</p>
+</footer>
+
+<a
+  class="wa-float"
+  href="https://wa.me/5493512494043?text=Hola!%20Quisiera%20consultar%20por%20un%20turno%20en%20NUIT"
+  target="_blank"
+  title="Escribinos por WhatsApp"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.524 5.849L.057 23.885a.5.5 0 0 0 .608.633l6.193-1.623A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.813 9.813 0 0 1-5.032-1.383l-.36-.214-3.733.979.997-3.645-.236-.373A9.818 9.818 0 0 1 2.182 12c0-5.413 4.405-9.818 9.818-9.818 5.413 0 9.818 4.405 9.818 9.818 0 5.413-4.405 9.818-9.818 9.818z"/>
+  </svg>
+</a>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  const _nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => _nav.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
+
+  const _obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); _obs.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.service-card, .review-card, .about-text, .about-img, .contact-item, .stat-box, .section-title, .section-intro, .hero-badge').forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.transitionDelay = (i % 3) * 0.08 + 's';
+    _obs.observe(el);
+  });
+
+  function _count(el) {
+    const txt = el.textContent.trim();
+    const num = parseFloat(txt);
+    if (!num) return;
+    const suf = txt.replace(/[\d.]/g, '');
+    const isF = txt.includes('.');
+    let cur = 0;
+    const t = setInterval(() => {
+      cur = Math.min(cur + num / 60, num);
+      el.textContent = (isF ? cur.toFixed(1) : Math.floor(cur)) + suf;
+      if (cur >= num) clearInterval(t);
+    }, 25);
+  }
+  const _cobs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting && !e.target._d) { e.target._d = true; _count(e.target); } });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-num').forEach(el => _cobs.observe(el));
+</script>
+</body>
+</html>
